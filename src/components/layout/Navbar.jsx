@@ -23,7 +23,7 @@ import { auth } from "../../lib/firebase";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const { logout } = useLogout();
   const variant = useBreakpointValue({ base: "mobile", md: "desktop" });
@@ -33,9 +33,6 @@ const Navbar = () => {
       auth.onAuthStateChanged((user) => {
         if (user) {
           setUser(user);
-          setLoading(false);
-        } else {
-          setUser(null);
           setLoading(false);
         }
       });
@@ -79,7 +76,7 @@ const Navbar = () => {
           <Flex gap={"1rem"} alignItems={"center"}>
             <Hide below="lg">
               <Link to="/">Home</Link>
-              <Link to="/profile">Profile</Link>
+              <Link to={`/profile/${user.uid}`}>Profile</Link>
             </Hide>
             <Show below="lg">
               <Avatar
@@ -118,31 +115,9 @@ const Navbar = () => {
             gap={"1rem"}
           >
             <Link to="/" fontSize={"2rem"}>
-              <Text
-                fontSize={"2xl"}
-                fontWeight={"normal"}
-                px={"5"}
-                py={"3"}
-                _hover={{ bg: "teal.700" }}
-                transition="all 0.2s ease-in-out"
-                rounded={"lg"}
-              >
-                Home
-              </Text>
+              Home
             </Link>
-            <Link to="/profile">
-              <Text
-                fontSize={"2xl"}
-                fontWeight={"normal"}
-                px={"5"}
-                py={"3"}
-                _hover={{ bg: "teal.700" }}
-                transition="all 0.2s ease-in-out"
-                rounded={"lg"}
-              >
-                Profile
-              </Text>
-            </Link>
+            <Link to={`/profile/${user.uid}`}>Profile</Link>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

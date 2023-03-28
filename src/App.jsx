@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:uid" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
