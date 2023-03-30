@@ -18,15 +18,15 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { useForm } from "react-hook-form";
 import { useAddPost } from "../../hooks/posts";
-import PostList from "../../post/Posts";
-import { usePost } from "../../hooks/posts";
+import PostList from "../post/Posts";
+import { usePosts } from "../../hooks/posts";
 
 const Main = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const { register, handleSubmit, reset, watch, errors } = useForm();
   const { addPost, isLoading } = useAddPost();
-  const { posts, isLoading: postsLoad } = usePost();
+  const { posts, isLoading: postsLoad } = usePosts();
 
   function handleAddPost(data) {
     addPost({
@@ -81,10 +81,11 @@ const Main = () => {
               <Link to={`/profile/${user.uid}`}>
                 <Flex direction="row" align="center" gap={"0.4rem"}>
                   <Avatar
-                    name={user.displayName}
+                    name={user.username}
                     src={user.avatar}
+                    color={"white"}
                     size={"lg"}
-                    bg="teal.500"
+                    bg="teal.700"
                     border={"2px solid teal.500"}
                     _hover={{ bg: "teal.800", transition: "all 0.6s" }}
                   />

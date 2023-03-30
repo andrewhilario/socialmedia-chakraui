@@ -1,5 +1,6 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
-import Header from "../components/layout/Header";
+import Header from "../layout/Header";
+import Actions from "./Actions";
 
 export default function Post({ post }) {
   const { text, createdAt } = post;
@@ -8,12 +9,13 @@ export default function Post({ post }) {
   return (
     <Box
       shadow={"md"}
-      w="100%"
+      w={{ base: "90%", md: "85%", lg: "50%" }}
       h="100%"
       my="2rem"
       bg={"teal.400"}
       borderRadius={"lg"}
       color={"white"}
+      mx={"auto"}
     >
       <Flex
         w="100%"
@@ -29,6 +31,7 @@ export default function Post({ post }) {
             {text}
           </Text>
         </Box>
+        <Actions post={post} />
       </Flex>
     </Box>
   );

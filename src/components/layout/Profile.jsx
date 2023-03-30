@@ -68,7 +68,12 @@ const Profile = () => {
         >
           <Flex direction={"column"} gap="1rem" alignItems={"center"}>
             <Box my="0.5rem">
-              <Avatar size="2xl" />
+              <Avatar
+                name={user.username}
+                bg={"teal.600"}
+                color={"white"}
+                size="2xl"
+              />
             </Box>
             <Text fontSize="2xl" fontWeight="semibold" color={"teal.500"}>
               @{user.username}

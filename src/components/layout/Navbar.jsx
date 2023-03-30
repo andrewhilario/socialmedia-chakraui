@@ -80,12 +80,14 @@ const Navbar = () => {
             </Hide>
             <Show below="lg">
               <Avatar
+                name={user.username}
                 bg={"teal.600"}
+                color={"white"}
                 onClick={onOpen}
                 cursor={"pointer"}
                 _hover={{ bg: "teal.900" }}
                 transition="all 0.2s"
-              ></Avatar>
+              />
             </Show>
             <Button
               bg={"teal.500"}

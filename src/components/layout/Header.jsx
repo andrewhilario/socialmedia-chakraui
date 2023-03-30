@@ -26,7 +26,12 @@ export default function Header({ uid, date }) {
         borderColor={"white"}
       >
         <Link to={`/profile/${user.id}`}>
-          <Avatar src={user.avatar} />
+          <Avatar
+            name={user.username}
+            src={user.avatar}
+            bg="teal.700"
+            color={"white"}
+          />
         </Link>
         <Flex direction="column" align="flex-start" gap={"0"} ml="1rem">
           <Link to={`/profile/${user.id}`}>
@@ -38,7 +43,7 @@ export default function Header({ uid, date }) {
               {user.username}
             </Text>
           </Link>
-          <Text fontSize={"1rem"}>about {formatDistanceToNow(date)} ago</Text>
+          <Text fontSize={"1rem"}> {formatDistanceToNow(date)} ago</Text>
         </Flex>
       </Flex>
     );
