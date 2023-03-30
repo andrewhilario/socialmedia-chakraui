@@ -123,15 +123,17 @@ const Main = () => {
             />
           </form>
         </Box>
-        <Heading
-          as="h2"
-          size="lg"
-          px={"2.5rem"}
-          my="2rem"
-          fontWeight={"semibold"}
-        >
-          Your Feed
-        </Heading>
+        <Box w={{ base: "85%", md: "85%", lg: "50%" }} my="2rem" mx={"auto"}>
+          <Heading
+            as="h2"
+            size="lg"
+            my="2rem"
+            fontWeight={"semibold"}
+            color={"teal.600"}
+          >
+            Your Feed
+          </Heading>
+        </Box>
         <PostList posts={posts} />
       </>
     );

@@ -23,6 +23,10 @@ import { useUser } from "../../hooks/users";
 import { useToggleLike, useDeletePost } from "../../hooks/posts";
 import { Link } from "react-router-dom";
 import { useComments } from "../../hooks/comments";
+import { useState } from "react";
+import { useEffect } from "react";
+import { auth, db } from "../../lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Actions({ post }) {
   const { id, likes, uid } = post;
@@ -38,6 +42,27 @@ export default function Actions({ post }) {
   const { deletePost, isLoading: deleteLoading } = useDeletePost(id);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [currentUser, setCurrentUser] = useState("");
+
+  useEffect(() => {
+    const authListener = () => {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          const docRef = doc(db, "users", user.uid);
+          getDoc(docRef).then((doc) => {
+            if (doc.exists) {
+              setCurrentUser(doc.data());
+              console.log(currentUser?.id);
+            } else {
+              console.log("No such document!");
+            }
+          });
+        }
+      });
+    };
+    authListener();
+  }, []);
 
   // console.log(comments.length);
 
@@ -111,13 +136,14 @@ export default function Actions({ post }) {
 
           <Text>{comments?.length}</Text>
         </Flex>
-        {!userLoading && user.id === uid && (
+        {currentUser?.id == user?.id && (
           <IconButton
             ml="auto"
             onClick={handleDeletePost}
             isLoading={deleteLoading}
             size="md"
-            color={"red.500"}
+            color={"white"}
+            _hover={{ color: "white", bg: "red.600" }}
             variant="ghost"
             icon={<FaTrash />}
             isRound

@@ -7,7 +7,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import Navbar from "../layout/Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { usePost } from "../../hooks/posts";
 import Post from "../post/index";
 import { useState, useEffect } from "react";
@@ -33,6 +33,8 @@ export default function Comments() {
         mx="auto"
       >
         <Button
+          as={Link}
+          to="/"
           bg={"teal.400"}
           color={"white"}
           mr={"auto"}

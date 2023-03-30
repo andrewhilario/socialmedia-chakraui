@@ -5,7 +5,7 @@ import Post from "./index";
 export default function PostList({ posts }) {
   return (
     <>
-      <Box w={{ base: "85%", md: "85%", lg: "50%" }} mx={"auto"}>
+      <Box w={{ base: "95%", md: "85%", lg: "50%", xl: "100%" }} mx={"auto"}>
         {posts?.length === 0 ? (
           <Text>No posts yet... Share your thoughts</Text>
         ) : (
