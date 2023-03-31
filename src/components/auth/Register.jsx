@@ -105,7 +105,7 @@ const Register = () => {
                 fontWeight={"medium"}
                 textDecor="underline"
               >
-                <RouterLink to="/register">Login</RouterLink>
+                <RouterLink to="/login">Login</RouterLink>
               </Link>
             </Text>
           </form>

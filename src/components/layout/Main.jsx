@@ -23,8 +23,8 @@ import { usePosts } from "../../hooks/posts";
 
 const Main = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { register, handleSubmit, reset, watch, errors } = useForm();
+
+  const { register, handleSubmit, reset } = useForm();
   const { addPost, isLoading } = useAddPost();
   const { posts, isLoading: postsLoad } = usePosts();
 
@@ -51,7 +51,6 @@ const Main = () => {
           // setUser(user);
         } else {
           setUser(null);
-          setLoading(false);
         }
       });
     };

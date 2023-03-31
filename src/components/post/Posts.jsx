@@ -9,7 +9,7 @@ export default function PostList({ posts }) {
         {posts?.length === 0 ? (
           <Text>No posts yet... Share your thoughts</Text>
         ) : (
-          posts?.map((post) => <Post key={post.id} post={post} />)
+          posts?.map((post) => <Post key={post?.id} post={post} />)
         )}
       </Box>
     </>

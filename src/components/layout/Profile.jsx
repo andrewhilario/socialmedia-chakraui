@@ -8,16 +8,25 @@ import {
   Text,
   Center,
   CircularProgress,
+  Link,
 } from "@chakra-ui/react";
+
 import { auth, db } from "../../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
+import { useUserPosts } from "../../hooks/users";
+import PostList from "../post/Posts";
+import { formatDistanceToNow } from "date-fns";
+import { usePosts } from "../../hooks/posts";
 
 const Profile = () => {
   const [user, setUser] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const [userAuth, authLoading, error] = useAuthState(auth);
+  const { userPosts, isLoading } = useUserPosts(userAuth?.uid);
+  const { posts, isLoading: postLoading } = usePosts();
+  console.log(posts);
 
   React.useEffect(() => {
     const authListener = () => {
@@ -59,11 +68,11 @@ const Profile = () => {
         <Navbar />
         <Box
           w={{ base: "90%", md: "100%" }}
-          p={"5"}
-          h={"100vh"}
+          px={"1rem"}
+          py={"2rem"}
           bg="gray.200"
           mx="auto"
-          my={10}
+          my={{ base: "1rem", md: "2rem", lg: "0" }}
           rounded="md"
         >
           <Flex direction={"column"} gap="1rem" alignItems={"center"}>
@@ -89,6 +98,41 @@ const Profile = () => {
             </Button>
           </Flex>
         </Box>
+        {userPosts?.map((post) => {
+          return (
+            <Box key={post?.id}>
+              <Flex
+                p={"1rem"}
+                w="100%"
+                h="100%"
+                alignItems={"center"}
+                borderBottom={"2px solid"}
+                borderColor={"white"}
+              >
+                <Link to={`/profile/${user.id}`}>
+                  <Avatar
+                    name={user.username}
+                    src={user.avatar}
+                    bg="teal.700"
+                    color={"white"}
+                  />
+                </Link>
+                <Flex direction="column" align="flex-start" gap={"0"} ml="1rem">
+                  <Link to={`/profile/${user.id}`}>
+                    <Text
+                      fontSize={"1.2rem"}
+                      fontWeight={"medium"}
+                      _hover={{ textTransform: "underline" }}
+                    >
+                      {user.username}
+                    </Text>
+                  </Link>
+                  <Text fontSize={"1rem"}> ago</Text>
+                </Flex>
+              </Flex>
+            </Box>
+          );
+        })}
       </>
     );
 };
