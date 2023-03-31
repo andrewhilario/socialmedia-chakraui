@@ -68,8 +68,54 @@ const Main = () => {
 
   if (!user) {
     return (
-      <Center h="100vh">
-        <CircularProgress isIndeterminate color="teal.400" />
+      <Center h="90vh">
+        <Box
+          w={"100%"}
+          h={"100%"}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          backgroundImage={"url('/background.svg')"}
+          backgroundSize={"cover"}
+          backgroundPosition={"center"}
+          backgroundRepeat={"no-repeat"}
+        >
+          <Box
+            w={{ base: "85%", md: "85%", lg: "50%" }}
+            my="2rem"
+            mx={"auto"}
+            color={"white"}
+          >
+            <Flex direction="column" align="center" gap={"1rem"}>
+              <Heading
+                as="h2"
+                size="4xl"
+                textAlign={"center"}
+                fontWeight={"semibold"}
+              >
+                Welcome to Socials App
+              </Heading>
+              <Text
+                fontSize={"1.2rem"}
+                fontWeight="normal"
+                textAlign={"center"}
+              >
+                A social media app built with React, Firebase and Chakra UI
+              </Text>
+              <Button
+                as={Link}
+                to="/register"
+                colorScheme="teal"
+                variant="solid"
+                mt={"1rem"}
+                px={"2rem"}
+                py={"1.5rem"}
+              >
+                Get Started
+              </Button>
+            </Flex>
+          </Box>
+        </Box>
       </Center>
     );
   } else {
