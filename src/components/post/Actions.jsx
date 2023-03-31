@@ -112,11 +112,10 @@ export default function Actions({ post }) {
             onClick={toggleLike}
             isLoading={likeLoading || userLoading}
             size={"md"}
-            bg={"teal.400"}
             aria-label="Like"
             variant={"ghost"}
             icon={isLiked ? <FaHeart /> : <FaRegHeart />}
-            _hover={{ bg: "teal.500" }}
+            _hover={{ bg: "teal.500", color: "white" }}
             isRound
           />
           <Text>{likes.length}</Text>
@@ -126,11 +125,10 @@ export default function Actions({ post }) {
             as={Link}
             to={`/comments/${post.id}`}
             size={"md"}
-            bg={"teal.400"}
             aria-label="Comment"
             variant={"ghost"}
             icon={comments?.length > 0 ? <FaCommentAlt /> : <FaRegCommentAlt />}
-            _hover={{ bg: "teal.500" }}
+            _hover={{ bg: "teal.500", color: "white" }}
             isRound
           />
 

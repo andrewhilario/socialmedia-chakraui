@@ -12,21 +12,41 @@ import {
 } from "@chakra-ui/react";
 
 import { auth, db } from "../../lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { useUserPosts } from "../../hooks/users";
 import PostList from "../post/Posts";
 import { formatDistanceToNow } from "date-fns";
 import { usePosts } from "../../hooks/posts";
+import {
+  useCollection,
+  useCollectionData,
+} from "react-firebase-hooks/firestore";
+import Actions from "../post/Actions";
+import { useParams } from "react-router-dom";
+import { useUser } from "../../hooks/users";
 
 const Profile = () => {
+  const userParams = useParams();
   const [user, setUser] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const [userAuth, authLoading, error] = useAuthState(auth);
-  const { userPosts, isLoading } = useUserPosts(userAuth?.uid);
+  const { userPosts, isLoading } = useUserPosts(userParams.uid);
   const { posts, isLoading: postLoading } = usePosts();
-  console.log(posts);
+  const { user: userProf } = useUser(userParams.uid);
+
+  if (userPosts && posts) {
+    console.log(userProf);
+  }
 
   React.useEffect(() => {
     const authListener = () => {
@@ -37,7 +57,6 @@ const Profile = () => {
             .then((doc) => {
               if (doc.exists()) {
                 setUser(doc.data());
-                console.log("Document data:", doc.data());
                 setLoading(false);
               } else {
                 console.log("No such document!");
@@ -46,6 +65,7 @@ const Profile = () => {
             .catch((error) => {
               console.log("Error getting document:", error);
             });
+
           //   setUser(user);
           //   setLoading(false);
         }
@@ -53,6 +73,7 @@ const Profile = () => {
     };
     authListener();
   }, []);
+
   if (!user || loading)
     return (
       <>
@@ -78,14 +99,15 @@ const Profile = () => {
           <Flex direction={"column"} gap="1rem" alignItems={"center"}>
             <Box my="0.5rem">
               <Avatar
-                name={user.username}
+                name={userProf.username}
                 bg={"teal.600"}
                 color={"white"}
                 size="2xl"
+                src={userProf.avatar}
               />
             </Box>
             <Text fontSize="2xl" fontWeight="semibold" color={"teal.500"}>
-              @{user.username}
+              @{userProf.username}
             </Text>
             <Button
               color={"white"}
@@ -98,27 +120,39 @@ const Profile = () => {
             </Button>
           </Flex>
         </Box>
+        <Box w={{ base: "90%", md: "100%" }} mx="auto" my="1rem">
+          <Text fontSize="2xl" fontWeight="semibold" color={"teal.500"}>
+            Your Posts
+          </Text>
+        </Box>
         {userPosts?.map((post) => {
           return (
-            <Box key={post?.id}>
+            <Box
+              key={post?.id}
+              my="1rem"
+              border={"2px solid"}
+              borderColor={"teal.500"}
+              w={{ base: "90%", md: "100%" }}
+              borderRadius={"xl"}
+              mx="auto"
+            >
               <Flex
                 p={"1rem"}
                 w="100%"
                 h="100%"
                 alignItems={"center"}
-                borderBottom={"2px solid"}
                 borderColor={"white"}
               >
                 <Link to={`/profile/${user.id}`}>
                   <Avatar
-                    name={user.username}
-                    src={user.avatar}
+                    name={userProf.username}
+                    src={userProf.avatar}
                     bg="teal.700"
                     color={"white"}
                   />
                 </Link>
                 <Flex direction="column" align="flex-start" gap={"0"} ml="1rem">
-                  <Link to={`/profile/${user.id}`}>
+                  <Link to={`/profile/${userProf.id}`}>
                     <Text
                       fontSize={"1.2rem"}
                       fontWeight={"medium"}
@@ -127,9 +161,16 @@ const Profile = () => {
                       {user.username}
                     </Text>
                   </Link>
-                  <Text fontSize={"1rem"}> ago</Text>
+                  <Text fontSize={"1rem"}>
+                    {" "}
+                    {formatDistanceToNow(post?.createdAt)} ago
+                  </Text>
                 </Flex>
               </Flex>
+              <Box p={"1rem"}>
+                <Text fontSize={"1.2rem"}>{post?.text}</Text>
+              </Box>
+              <Actions post={post} />
             </Box>
           );
         })}

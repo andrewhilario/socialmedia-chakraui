@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 export default function Header({ uid, date }) {
   const { user, isLoading } = useUser(uid);
 
-  console.log(user);
-
   if (isLoading) {
     return (
       <Center h="80vh">

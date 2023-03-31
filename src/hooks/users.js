@@ -20,9 +20,5 @@ export function useUserPosts(uid) {
   );
   const [userPosts, isLoading, error] = useCollectionData(q);
 
-  if (error) {
-    throw error;
-  }
-
   return { userPosts, isLoading };
 }
