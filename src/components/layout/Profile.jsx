@@ -46,6 +46,7 @@ const Profile = () => {
 
   if (userPosts && posts) {
     console.log(userProf);
+    console.log(user?.id);
   }
 
   React.useEffect(() => {
@@ -74,6 +75,25 @@ const Profile = () => {
     authListener();
   }, []);
 
+  function enableEdit() {
+    if (user?.id === userProf?.id) {
+      return (
+        <Button
+          color={"white"}
+          bg="teal.500"
+          _hover={{ bg: "teal.900" }}
+          py={"25px"}
+          px={"30px"}
+        >
+          Edit your Profile
+        </Button>
+      );
+    } else {
+      return false;
+    }
+  }
+  console.log(enableEdit());
+
   if (!user || loading)
     return (
       <>
@@ -89,38 +109,41 @@ const Profile = () => {
         <Navbar />
         <Box
           w={{ base: "90%", md: "100%" }}
-          px={"1rem"}
-          py={"2rem"}
-          bg="gray.200"
+
+          backgroundImage={'url(https://random.imagecdn.app/1920/1080)'}
+          backgroundRepeat={"no-repeat"}
+          backgroundSize={"cover"}
           mx="auto"
           my={{ base: "1rem", md: "2rem", lg: "0" }}
-          rounded="md"
-        >
-          <Flex direction={"column"} gap="1rem" alignItems={"center"}>
-            <Box my="0.5rem">
-              <Avatar
-                name={userProf.username}
-                bg={"teal.600"}
+        > 
+          <Box w='100%' h='100%' background={'blackAlpha.600'} px={"1rem"} py={"2rem"}>
+            <Flex direction={"column"}  gap="1rem" alignItems={"center"}  >
+              <Box my="0.5rem" >
+                <Avatar
+                  name={userProf?.username}
+                  bg={"teal.600"}
+                  color={"white"}
+                  size="2xl"
+                  src={userProf?.avatar}
+                />
+              </Box>
+              <Text fontSize="2xl" fontWeight="semibold" color={"teal.400"}>
+                @{userProf?.username}
+              </Text>
+              {enableEdit()}
+              {/* <Button
                 color={"white"}
-                size="2xl"
-                src={userProf.avatar}
-              />
-            </Box>
-            <Text fontSize="2xl" fontWeight="semibold" color={"teal.500"}>
-              @{userProf.username}
-            </Text>
-            <Button
-              color={"white"}
-              bg="teal.500"
-              _hover={{ bg: "teal.900" }}
-              py={"25px"}
-              px={"30px"}
-            >
-              Edit your Profile
-            </Button>
-          </Flex>
+                bg="teal.500"
+                _hover={{ bg: "teal.900" }}
+                py={"25px"}
+                px={"30px"}
+              >
+                Edit your Profile
+              </Button> */}
+            </Flex> 
+          </Box>
         </Box>
-        <Box w={{ base: "90%", md: "100%" }} mx="auto" my="1rem">
+        <Box w={{ base: "90%", md: "60%",lg: "50%" }} mx="auto" my="1rem">
           <Text fontSize="2xl" fontWeight="semibold" color={"teal.500"}>
             Your Posts
           </Text>
@@ -130,9 +153,10 @@ const Profile = () => {
             <Box
               key={post?.id}
               my="1rem"
+              
               border={"2px solid"}
               borderColor={"teal.500"}
-              w={{ base: "90%", md: "100%" }}
+              w={{ base: "80%", md: "60%", lg: "50%" }}
               borderRadius={"xl"}
               mx="auto"
             >
@@ -158,7 +182,7 @@ const Profile = () => {
                       fontWeight={"medium"}
                       _hover={{ textTransform: "underline" }}
                     >
-                      {user.username}
+                      {userProf.username}
                     </Text>
                   </Link>
                   <Text fontSize={"1rem"}>

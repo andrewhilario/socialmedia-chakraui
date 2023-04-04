@@ -77,6 +77,7 @@ const Navbar = () => {
             <Hide below="lg">
               <Link to="/">Home</Link>
               <Link to={`/profile/${user.uid}`}>Profile</Link>
+              <Link to={"/chat"}>Chat</Link>
             </Hide>
             <Show below="lg">
               <Avatar
@@ -120,6 +121,7 @@ const Navbar = () => {
               Home
             </Link>
             <Link to={`/profile/${user.uid}`}>Profile</Link>
+            <Link to={"/chat"}>Chat</Link>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
