@@ -9,7 +9,7 @@ export default function Post({ post }) {
   return (
     <Box
       shadow={"md"}
-      w={{ base: "90%", md: "85%", lg: "50%" }}
+      w={{ base: "90%", lg: "50%" }}
       h="100%"
       my="2rem"
       bg={"teal.400"}

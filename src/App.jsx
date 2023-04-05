@@ -7,7 +7,6 @@ import Dashboard from "./components/layout/Dashboard";
 import NotFound from "./components/layout/NotFound";
 import Profile from "./components/layout/Profile";
 import Comments from "./components/comments/index";
-import Chat from "./components/chat/index";
 
 // Theme
 import "@fontsource/plus-jakarta-sans";
@@ -21,7 +20,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile/:uid" element={<Profile />} />
         <Route path="/comments/:id" element={<Comments />} />
-        <Route path="/chat" element={<Chat />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

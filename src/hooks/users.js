@@ -22,3 +22,12 @@ export function useUserPosts(uid) {
 
   return { userPosts, isLoading };
 }
+
+export function useListUsers() {
+  const q = query(collection(db, "users"));
+  const [users, isLoading, error] = useCollectionData(q);
+
+  if (error) console.log(error);
+
+  return { users, isLoading };
+}
